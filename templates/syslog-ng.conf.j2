@@ -1,0 +1,3 @@
+{{ ansible_managed | comment }}
+
+{{ syslog_ng_config | encode_nginx(block_semicolon=True) }}

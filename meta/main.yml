@@ -1,0 +1,24 @@
+---
+
+galaxy_info:
+  author: Jiri Tyr
+  description: Role which installs and configures syslog-ng
+  license: MIT
+  min_ansible_version: 2.6
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+  galaxy_tags:
+    - system
+dependencies:
+  - config_encoder_filters

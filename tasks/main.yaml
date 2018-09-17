@@ -1,0 +1,46 @@
+---
+
+- name: Add EPEL YUM repo
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: "{{ syslog_ng_epel_yumrepo_url }}"
+    gpgkey: "{{ syslog_ng_epel_yumrepo_gpgkey }}"
+  args: "{{ syslog_ng_epel_yumrepo_params }}"
+  when: >
+    ansible_os_family == 'RedHat' and
+    syslog_ng_epel_install == true
+  tags:
+    - syslog_ng_pkg
+
+- name: Install syslog-ng
+  package:
+    name: "{{ syslog_ng_pkg }}"
+  notify:
+    - Restart syslog-ng service
+  tags:
+    - syslog_ng_pkg
+
+- name: Configure syslog-ng
+  template:
+    src: syslog-ng.conf.j2
+    dest: "{{ syslog_ng_config_file }}"
+  notify:
+    - Reload syslog-ng service
+  tags:
+    - syslog_ng_config
+
+- name: Enable syslog-ng service
+  service:
+    name: "{{ syslog_ng_service }}"
+    enabled: yes
+  tags:
+    - syslog_ng_service
+
+- name: Start syslog-ng service
+  service:
+    name: "{{ syslog_ng_service }}"
+    state: started
+  register: syslog_ng_service_started
+  tags:
+    - syslog_ng_service

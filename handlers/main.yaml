@@ -1,0 +1,23 @@
+---
+
+- name: Restart syslog-ng service
+  service:
+    name: "{{ syslog_ng_service }}"
+    state: restarted
+  register: syslog_ng_service_restarted
+  when: >
+    syslog_ng_service_started is not defined or
+    not syslog_ng_service_started.changed
+
+- name: Reload syslog-ng service
+  service:
+    name: "{{ syslog_ng_service }}"
+    state: reloaded
+  when: >
+    (
+      syslog_ng_service_started is not defined or
+      not syslog_ng_service_started.changed
+    ) and (
+      syslog_ng_service_restarted is not defined or
+      not syslog_ng_service_restarted.changed
+    )
