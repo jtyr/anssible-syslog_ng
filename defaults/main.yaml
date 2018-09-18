@@ -10,7 +10,7 @@ syslog_ng_service: syslog-ng
 syslog_ng_epel_install: "{{ yumrepo_epel_install | default(true) }}"
 
 # EPEL YUM repo URL
-syslog_ng_epel_yumrepo_url: "{{ yumrepo_epel_url | default('https://dl.fedoraproject.org/pub/epel/$releasever/$arch/') }}"
+syslog_ng_epel_yumrepo_url: "{{ yumrepo_epel_url | default('https://dl.fedoraproject.org/pub/epel/$releasever/$basearch/') }}"
 
 # EPEL YUM repo GPG key
 syslog_ng_epel_yumrepo_gpgkey: "{{ yumrepo_epel_gpgkey | default('https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever') }}"
@@ -235,8 +235,8 @@ syslog_ng_config_logs: "{{
 
 # Default config
 syslog_ng_config__default:
-  - "@version:{{ syslog_ng_config_version }}"
-  - '@include "{{ syslog_ng_config_include_scl }}"'
+  - "@version:{{ syslog_ng_config_version }}!;"
+  - '@include "{{ syslog_ng_config_include_scl }}"!;'
   - options: "{{ syslog_ng_config_options }}"
 
 # Custom config

@@ -55,8 +55,8 @@ Examples
   hosts: all
   vars:
     syslog_ng_config:
-      - "@version:3.5"
-      - '@include "scl.conf"'
+      - "@version:3.5!;"
+      - '@include "scl.conf"!;'
       - options:
           - flush_lines (0)
           - time_reopen (10)
@@ -232,7 +232,7 @@ syslog_ng_service: syslog-ng
 syslog_ng_epel_install: "{{ yumrepo_epel_install | default(true) }}"
 
 # EPEL YUM repo URL
-syslog_ng_epel_yumrepo_url: "{{ yumrepo_epel_url | default('https://dl.fedoraproject.org/pub/epel/$releasever/$arch/') }}"
+syslog_ng_epel_yumrepo_url: "{{ yumrepo_epel_url | default('https://dl.fedoraproject.org/pub/epel/$releasever/$basearch/') }}"
 
 # EPEL YUM repo GPG key
 syslog_ng_epel_yumrepo_gpgkey: "{{ yumrepo_epel_gpgkey | default('https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever') }}"
